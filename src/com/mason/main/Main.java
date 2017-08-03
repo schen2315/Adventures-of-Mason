@@ -9,15 +9,15 @@ import com.mason.states.MenuState;
 import com.mason.states.GameState;
 
 public class Main extends StateBasedGame {
-	public static int resolution[] = {400, 400};
+	public static int resolution[] = {640, 360};
 	public static final int menu = 1;
 	public static final int game = 1;
 	public static AppGameContainer gc;
 	public static final String gamename = "Adventures of Mason";
 	public Main(String gamename) {
 		super(gamename);
-		this.addState(new MenuState());
-		this.addState(new GameState());
+		this.addState(new MenuState(1));
+		this.addState(new GameState(0));
 	}
 	public static void main(String[] args) {
 		try {
