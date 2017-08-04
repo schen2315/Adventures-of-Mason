@@ -1,14 +1,15 @@
 package com.mason.states;
 
-import com.mason.Entities.Entity;
-import com.mason.Entities.Level;
-import com.mason.Entities.Player;
-
 import org.newdawn.slick.GameContainer;
 import org.newdawn.slick.Graphics;
 import org.newdawn.slick.SlickException;
 import org.newdawn.slick.state.BasicGameState;
 import org.newdawn.slick.state.StateBasedGame;
+
+import com.mason.entities.Entity;
+import com.mason.entities.Level;
+import com.mason.entities.Player;
+
 import org.newdawn.slick.Input;
 import org.newdawn.slick.geom.Rectangle;
 /*
@@ -24,6 +25,7 @@ public class GameState extends BasicGameState {
 	private Player player;
 	private Entity barrel;
 	private Entity tower;
+	private float step = .2f;
 	boolean quit = false;
 	float buckyPositionX;
 	float buckyPositionY;
@@ -45,9 +47,8 @@ public class GameState extends BasicGameState {
 		worldMap.insertEntity(barrel);
 		//worldMap.insertEntity(tower);
 		
-		player.collisionBoxes.add(new Rectangle(296 + 12, 136 + 28, 24, 12));
+		player.collisionBoxes.add(new Rectangle(player.center[0] + 12, player.center[1] + 28, 24, 12));
 		player.setRenderBox(new Rectangle(12, 28, 24, 12));
-		player.setPos(buckyPositionX + 296, buckyPositionY + 136);
 		
 		barrel.collisionBoxes.add(new Rectangle(24, 24, 8, 8));
 		barrel.collisionBoxes.add(new Rectangle(32, 24, 16, 8));
@@ -65,7 +66,8 @@ public class GameState extends BasicGameState {
 		
 		worldMap.draw(buckyPositionX, buckyPositionY);
 		//drawCollisionBoxes(g);
-		g.drawString( "Bucky's X: " + buckyPositionX + "\nBucky's Y: " + buckyPositionY, 400, 20);
+		//drawRenderBoxes(g);
+		g.drawString( "Bucky's X: " + buckyPositionX + "\nBucky's Y: " + buckyPositionY, 200, 20);
 		if(quit == true) {
 			g.drawString( "Resume (R)", 250, 100);
 			g.drawString( "Main Menu (M)", 250, 150);
@@ -83,41 +85,41 @@ public class GameState extends BasicGameState {
 		if(input.isKeyDown(Input.KEY_W)) {
 			player.setMovingUp();
 			player.setStillUp();
-			buckyPositionY += delta * .2f;
+			buckyPositionY += delta * step;
 			if(isCollision()) {
-				buckyPositionY -= delta * .2f;
+				buckyPositionY -= delta * step;
 			}
-			player.setPos(player.getPosX(), 136 - buckyPositionY);
+			player.setPos(player.getPosX(), player.center[1] - buckyPositionY);
 		}
 		//down
 		if(input.isKeyDown(Input.KEY_S)) {
 			player.setMovingDown();
 			player.setStillDown();
-			buckyPositionY -= delta * .2f;
+			buckyPositionY -= delta * step;
 			if(isCollision()) {
-				buckyPositionY += delta * .2f;
+				buckyPositionY += delta * step;
 			}
-			player.setPos(player.getPosX(), 136 - buckyPositionY);
+			player.setPos(player.getPosX(), player.center[1] - buckyPositionY);
  		}
 		//left
 		if(input.isKeyDown(Input.KEY_A)) {
 			player.setMovingLeft();
 			player.setStillLeft();
-			buckyPositionX += delta * .2f;
+			buckyPositionX += delta * step;
 			if(isCollision()) {
-				buckyPositionX -= delta * .2f;
+				buckyPositionX -= delta * step;
 			}
-			player.setPos(296 - buckyPositionX, player.getPosY());
+			player.setPos(player.center[0] - buckyPositionX, player.getPosY());
 		}
 		//right
 		if(input.isKeyDown(Input.KEY_D)) {
 			player.setMovingRight();
 			player.setStillRight();
-			buckyPositionX -= delta * .2f;
+			buckyPositionX -= delta * step;
 			if(isCollision()) {
-				buckyPositionX += delta * .2f;
+				buckyPositionX += delta * step;
 			}
-			player.setPos(296 - buckyPositionX, player.getPosY());
+			player.setPos(player.center[0] - buckyPositionX, player.getPosY());
 		}
 		
 		//escape
@@ -170,7 +172,7 @@ public class GameState extends BasicGameState {
 	}
 	public void drawCollisionBoxes(Graphics g) {
 		//player
-		g.drawRect(296 + 12, 136 + 28, 24, 12);	
+		g.draw(player.collisionBoxes.get(0));
 		Rectangle r;
 		Entity ent;
 		for(int i=0; i < worldMap.objects.size(); i++) {
@@ -181,6 +183,20 @@ public class GameState extends BasicGameState {
 					g.draw(new Rectangle(buckyPositionX + r.getX() + ent.getPosX(), buckyPositionY + r.getY() + ent.getPosY(), 
 							r.getWidth(), r.getHeight()));
 				}
+			}
+		}
+	}
+	public void drawRenderBoxes(Graphics g) {
+		//player
+		Rectangle r = player.getRenderBox();
+		g.draw(new Rectangle(buckyPositionX + r.getX() + player.getPosX(), buckyPositionY + r.getY() + player.getPosY(), 
+				r.getWidth(), r.getHeight()));
+		Entity ent;
+		for(int i=0; i < worldMap.objects.size(); i++) {
+			ent = worldMap.objects.get(i);
+			if(ent != player) {
+					g.draw(new Rectangle(buckyPositionX + r.getX() + ent.getPosX(), buckyPositionY + r.getY() + ent.getPosY(), 
+							r.getWidth(), r.getHeight()));
 			}
 		}
 	}

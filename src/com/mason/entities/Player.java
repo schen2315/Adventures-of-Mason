@@ -1,14 +1,18 @@
-package com.mason.Entities;
+package com.mason.entities;
 
 import org.newdawn.slick.Animation;
 import org.newdawn.slick.Image;
 import org.newdawn.slick.SlickException;
+
+import com.mason.main.Main;
 
 public class Player extends Entity {
 	
 	private Animation player, movingUp, movingDown, movingLeft, movingRight;
 	private Animation lastState, stillUp, stillDown, stillLeft, stillRight;
 	private int duration[] = {100, 100, 100, 100};
+	public static final int[] center = {(Main.resolution[0]/2)-24, (Main.resolution[1]/2)-24};
+	//public static final int[] center = {0,0};
 	public Animation getPlayer() {
 		return player;
 	}
@@ -20,7 +24,7 @@ public class Player extends Entity {
 	//We load in a sprite sheet w/ each entire animation in a single column
 	public Player(String pathToImage, int px, int py) throws SlickException {
 		super(px, py);
-		posX = 296; posY = 136;
+		posX =center[0]; posY =center[1];
 		Image buckyUp0, buckyUp1, buckyUp2, buckyUp3;
 		Image buckyDown0, buckyDown1, buckyDown2, buckyDown3;
 		Image buckyLeft0, buckyLeft1, buckyLeft2, buckyLeft3;
@@ -72,7 +76,7 @@ public class Player extends Entity {
 	@Override
 	public void draw(float offX, float offY) {
 		//ignore the offset
-		player.draw(296, 136);
+		player.draw(center[0], center[1]);
 	}
 	public float getPosX() {
 		return posX;

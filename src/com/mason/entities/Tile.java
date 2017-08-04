@@ -1,16 +1,14 @@
-package com.mason.Entities;
+package com.mason.entities;
 
 import org.newdawn.slick.Image;
 
 
 public class Tile {
 	private Image tile;
-	private int width;
-	private int height;
-	Tile(Image t, int w, int h) {
+	static final int height = 32;
+	static final int width = 32;
+	Tile(Image t) {
 		tile = t;
-		width = w;
-		height = h;
 	}
 	public int getWidth() {
 		return width;

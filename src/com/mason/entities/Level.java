@@ -1,4 +1,4 @@
-package com.mason.Entities;
+package com.mason.entities;
 
 import java.util.ArrayList;
 import java.util.Collections;
@@ -24,7 +24,7 @@ public class Level {
 		for(int i=0; i<dimX; i++) {
 			for(int j=0; j<dimY; j++) {
 				if(tmx.getTileImage(i,j,0) != null)
-					map[i][j] = new Tile(tmx.getTileImage(i,j,0), 32, 32);
+					map[i][j] = new Tile(tmx.getTileImage(i,j,0));
 			}
 		}
 	}
@@ -50,7 +50,7 @@ public class Level {
 		for(int i=0; i < dimX; i++) {
 			for(int j=0; j < dimY; j++) {
 				if(map[i][j] != null)
-					map[i][j].draw(offX + (i*32), offY + (j*32));
+					map[i][j].draw(offX + (i*Tile.width), offY + (j*Tile.height));
 			}
 		}
 		//render objects & player
@@ -58,9 +58,7 @@ public class Level {
 		Collections.sort(objects, (ent1, ent2) -> {
 			float val1 = ((Entity) ent1).getRenderBox().getY() + ((Entity) ent1).getRenderBox().getHeight() + ent1.getPosY();
 			float val2 = ((Entity) ent2).getRenderBox().getY() + ((Entity) ent2).getRenderBox().getHeight() + ent2.getPosY();
-			//if(ent1 == player) System.out.println(player.getPosX() + " " + player.getPosY()); 
-			//if(ent2 == player) System.out.println(player.getPosX() + " " + player.getPosY());
-			//System.out.println("Val 1: " + val1 + " Val 2: " + val2);
+			//System.out.println("val1: " + val1 + " val2: " + val2);
 			if(val1 > val2) return 1;
 			else if(val1 == val2) return 0;
 			else return -1;

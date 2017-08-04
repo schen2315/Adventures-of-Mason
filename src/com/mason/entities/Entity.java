@@ -1,4 +1,4 @@
-package com.mason.Entities;
+package com.mason.entities;
 
 import java.util.ArrayList;
 
@@ -27,7 +27,7 @@ public class Entity {
 		for(int i=0; i<dimX; i++) {
 			for(int j=0; j<dimY; j++) {
 				if(tmx.getTileImage(i,j,0) != null)
-					tiles[i][j] = new Tile(tmx.getTileImage(i,j,0), 32, 32);
+					tiles[i][j] = new Tile(tmx.getTileImage(i,j,0));
 			}
 		}
 	}
@@ -41,7 +41,7 @@ public class Entity {
 		for(int i=0; i<dimX; i++) {
 			for(int j=0; j<dimY; j++) {
 				if(tmx.getTileImage(i,j,0) != null)
-					tiles[i][j] = new Tile(tmx.getTileImage(i,j,0), 32, 32);
+					tiles[i][j] = new Tile(tmx.getTileImage(i,j,0));
 			}
 		}
 	}
@@ -80,7 +80,7 @@ public class Entity {
 		for(int i=0; i < dimX; i++) {
 			for(int j=0; j < dimY; j++) {
 				if(tiles[i][j] != null)
-					tiles[i][j].draw(offX + (i*32) + posX , offY + (j*32) + posY);
+					tiles[i][j].draw(offX + (i*Tile.width) + posX , offY + (j*Tile.height) + posY);
 			}
 		}
 	}
