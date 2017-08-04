@@ -6,6 +6,7 @@ import org.newdawn.slick.SlickException;
 import org.newdawn.slick.state.BasicGameState;
 import org.newdawn.slick.state.StateBasedGame;
 
+import com.mason.entities.Barrel1;
 import com.mason.entities.Entity;
 import com.mason.entities.Level;
 import com.mason.entities.Player;
@@ -23,7 +24,7 @@ public class GameState extends BasicGameState {
 
 	private Level worldMap;
 	private Player player;
-	private Entity barrel;
+	private Barrel1 barrel;
 	private Entity tower;
 	private float step = .2f;
 	boolean quit = false;
@@ -38,7 +39,7 @@ public class GameState extends BasicGameState {
 		buckyPositionX = 0;
 		buckyPositionY = 0;
 		player = new Player("george.png", 296, 136);
-		barrel = new Entity("barrel.tmx", 2, 2, 9*32, 11*32);
+		barrel = new Barrel1(9*32, 11*32);
 		//tower = new Entity("tower.tmx", 3, 11, 6*32, 0*32);
 		worldMap = new Level("firstMap.tmx", 20, 20);
 		worldMap.player = player;
@@ -49,17 +50,6 @@ public class GameState extends BasicGameState {
 		
 		player.collisionBoxes.add(new Rectangle(player.center[0] + 12, player.center[1] + 28, 24, 12));
 		player.setRenderBox(new Rectangle(12, 28, 24, 12));
-		
-		barrel.collisionBoxes.add(new Rectangle(24, 24, 8, 8));
-		barrel.collisionBoxes.add(new Rectangle(32, 24, 16, 8));
-		barrel.collisionBoxes.add(new Rectangle(32, 32, 10, 30));
-		barrel.collisionBoxes.add(new Rectangle(0, 32, 32, 10));
-		barrel.collisionBoxes.add(new Rectangle(16, 32 + 10, 16, 16));
-		barrel.setRenderBox(new Rectangle(0, 32, 32, 10));
-		
-		for(int i=0; i < worldMap.objects.size(); i++) {
-			System.out.println(worldMap.objects.get(i).getRenderBox().getY());
-		}
 	}
 	//draw stuff on screen
 	public void render(GameContainer gc, StateBasedGame sbg, Graphics g) throws SlickException {

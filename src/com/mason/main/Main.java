@@ -10,7 +10,7 @@ import com.mason.states.GameState;
 
 public class Main extends StateBasedGame {
 	//public static int resolution[] = {640, 360};
-	public static int resolution[] = {800, 800};
+	public static int resolution[] = {800, 600};
 	public static final int menu = 1;
 	public static final int game = 1;
 	public static AppGameContainer gc;
