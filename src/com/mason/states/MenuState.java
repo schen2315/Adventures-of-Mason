@@ -1,8 +1,10 @@
 package com.mason.states;
 
-
+import com.mason.main.Main;
 
 import org.lwjgl.input.Mouse;
+
+
 import org.newdawn.slick.GameContainer;
 import org.newdawn.slick.Graphics;
 import org.newdawn.slick.Image;
@@ -10,65 +12,53 @@ import org.newdawn.slick.SlickException;
 import org.newdawn.slick.state.BasicGameState;
 import org.newdawn.slick.state.StateBasedGame;
 
-public class MenuState extends BasicGameState{
+public class MenuState extends BasicGameState {
+	public Image playNow;
+	public Image exitGame;
+	private int playNowResolution[] = {202,37};
+	private int exitGameResolution[] = {202,37};
+	private int playNowPosition[] = {100, 100};
+	private int exitGamePosition[] = {100, 200};
 	
-	Image playNow;
-	Image exitGame;
-	
-	public static final int ID = 1;
-
-	public MenuState(int State){
-		
+	public MenuState(int State) {
 		
 	}
-	public void enter(GameContainer gc, StateBasedGame sbg){
-		System.out.println("Entering MenuState");
-		
-	}
-	
-	public void leave(GameContainer gc, StateBasedGame sbg){
-		System.out.println("leaving MenuState");
-		
-	}
-
-	@Override
 	public void init(GameContainer gc, StateBasedGame sbg) throws SlickException {
-		playNow = new Image("res/button1.png");
-		exitGame = new Image("res/right_sprite_one.png");
-		enter(gc, sbg);
-		
-		
+		playNow = new Image("res/playNow.png");
+		exitGame = new Image("res/exitGame.png");
 	}
-
-	@Override
+	//draw stuff on screen
 	public void render(GameContainer gc, StateBasedGame sbg, Graphics g) throws SlickException {
-		g.drawString("Welcome to The Adventures Of Mason", 150, 50);
-		playNow.draw(100, 100);
-		exitGame.draw(100, 200);
+		g.drawString("Welcome to Mason's Adventures!", 100, 50);
+		playNow.draw(playNowPosition[0], playNowPosition[1]);
+		exitGame.draw(exitGamePosition[0], exitGamePosition[1]);
 	}
-
-	@Override
-	public void update(GameContainer gc, StateBasedGame sbg, int DELTA) throws SlickException {
+	public void update(GameContainer gc, StateBasedGame sbg, int delta) throws SlickException {
 		int posX = Mouse.getX();
 		int posY = Mouse.getY();
-		//playNow button
-		if((posX > 100 && posX < 311) && (posY > 209 && posY < 260)) {
+		//playNow button -> later we should put make this a function that
+		//takes a function as a parameter
+		if((posX >= playNowPosition[0] && posX <= playNowPosition[0] + playNowResolution[0])
+				&& (posY >= (Main.resolution[1]-playNowPosition[1]-playNowResolution[1]) 
+				&& posY <= (Main.resolution[1]-playNowPosition[1]))) {
 			if(Mouse.isButtonDown(0)) {
-				sbg.enterState(2);
+				sbg.enterState(0);
+				System.out.println("Entering game state");
 			}
 		}
 		//exit button
-		if((posX > 100 && posX < 311) && (posY > 109 && posY < 160)) {
+		if((posX >= exitGamePosition[0] && posX <= exitGamePosition[0] + exitGameResolution[0])
+				&& (posY >= (Main.resolution[1]-exitGamePosition[1]-exitGameResolution[1]) 
+				&& posY <= (Main.resolution[1]-exitGamePosition[1]))) {
+
 			if(Mouse.isButtonDown(0)) {
 				System.exit(0);
 			}
 		}
 	}
 
-	@Override
 	public int getID() {
-		
-		return ID;
+		return 1;
 	}
-
 }
+
