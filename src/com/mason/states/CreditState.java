@@ -6,15 +6,15 @@ import org.newdawn.slick.SlickException;
 import org.newdawn.slick.state.BasicGameState;
 import org.newdawn.slick.state.StateBasedGame;
 
-public class GameState extends BasicGameState {
-	
-	
-	public static final int ID = 2;
+public class CreditState extends BasicGameState {
 
-	public GameState(int State) {
+	public static final int ID = 3;
+
 		
+	
+	public CreditState(int State) {
+		// TODO Auto-generated constructor stub
 	}
-
 	@Override
 	public void init(GameContainer gc, StateBasedGame sbg) throws SlickException {
 		// TODO Auto-generated method stub
@@ -35,7 +35,7 @@ public class GameState extends BasicGameState {
 
 	@Override
 	public int getID() {
-		
+		// TODO Auto-generated method stub
 		return ID;
 	}
 

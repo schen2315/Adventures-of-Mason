@@ -6,14 +6,14 @@ import org.newdawn.slick.SlickException;
 import org.newdawn.slick.state.BasicGameState;
 import org.newdawn.slick.state.StateBasedGame;
 
-public class GameState extends BasicGameState {
+public class SplashScreen extends BasicGameState {
 	
-	
-	public static final int ID = 2;
+	public static final int ID = 4;
 
-	public GameState(int State) {
+	public SplashScreen(int State) {
 		
 	}
+
 
 	@Override
 	public void init(GameContainer gc, StateBasedGame sbg) throws SlickException {
@@ -38,5 +38,7 @@ public class GameState extends BasicGameState {
 		
 		return ID;
 	}
+
+	
 
 }
