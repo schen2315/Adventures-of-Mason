@@ -1,5 +1,6 @@
 package com.mason.states;
 
+import org.lwjgl.input.Mouse;
 import org.newdawn.slick.GameContainer;
 import org.newdawn.slick.Graphics;
 import org.newdawn.slick.SlickException;
@@ -7,10 +8,12 @@ import org.newdawn.slick.state.BasicGameState;
 import org.newdawn.slick.state.StateBasedGame;
 
 import com.mason.entities.Barrel1;
+import com.mason.entities.Cave1;
 import com.mason.entities.Entity;
 import com.mason.entities.Level;
 import com.mason.entities.Player;
-
+import com.mason.entities.Tower1;
+import com.mason.main.Main;
 
 import org.newdawn.slick.Input;
 import org.newdawn.slick.geom.Rectangle;
@@ -19,6 +22,7 @@ import org.newdawn.slick.geom.Rectangle;
  * Also handles render order
  * and collision management
  * */
+import org.newdawn.slick.geom.Shape;
 
 public class GameState extends BasicGameState {
 	
@@ -42,8 +46,9 @@ public class GameState extends BasicGameState {
 		buckyPositionY = 0;
 		player = new Player("george.png", 296, 136);
 		barrel = new Barrel1(9*32, 11*32);
-		tower = new Entity("tower.tmx", 3, 11, 6*32, 0*32);
-		cave = new Entity("cave.tmx", 8, 5, 12*32, 0*32);
+		//tower = new Tower1(6*32, 0*32);
+		tower = new Tower1(0, 0);
+		cave = new Cave1(12*32, 0*32);
 		worldMap = new Level("firstMap.tmx", 20, 20);
 		worldMap.player = player;
 		
@@ -59,9 +64,10 @@ public class GameState extends BasicGameState {
 	public void render(GameContainer gc, StateBasedGame sbg, Graphics g) throws SlickException {
 		
 		worldMap.draw(buckyPositionX, buckyPositionY);
-		//drawCollisionBoxes(g);
-		drawRenderBoxes(g);
-		g.drawString( "Bucky's X: " + buckyPositionX + "\nBucky's Y: " + buckyPositionY, 200, 20);
+		drawCollisionBoxes(g);
+		//drawRenderBoxes(g);
+		g.drawString("Bucky's X: " + buckyPositionX + "\nBucky's Y: " + buckyPositionY, 200, 20);
+		g.drawString("Mouse X: " + Mouse.getX() + " Mouse Y: " + (Main.resolution[1] - Mouse.getY()), 200, 60);
 		if(quit == true) {
 			g.drawString( "Resume (R)", 250, 100);
 			g.drawString( "Main Menu (M)", 250, 150);
@@ -148,7 +154,7 @@ public class GameState extends BasicGameState {
 
 	}
 	public boolean isCollision() {
-		Rectangle r;
+		Shape r;
 		Entity ent;
 		for(int i=0; i < worldMap.objects.size(); i++) {
 			ent = worldMap.objects.get(i);
@@ -169,31 +175,43 @@ public class GameState extends BasicGameState {
 	public void drawCollisionBoxes(Graphics g) {
 		//player
 		g.draw(player.collisionBoxes.get(0));
-		Rectangle r;
+		Shape r;
 		Entity ent;
+		float rposX, rposY;
 		for(int i=0; i < worldMap.objects.size(); i++) {
 			ent = worldMap.objects.get(i);
 			if(ent != player) {
 				for(int j=0; j < worldMap.objects.get(i).collisionBoxes.size(); j++) {
-					r = worldMap.objects.get(i).collisionBoxes.get(j);
-					g.draw(new Rectangle(buckyPositionX + r.getX() + ent.getPosX(), buckyPositionY + r.getY() + ent.getPosY(), 
-							r.getWidth(), r.getHeight()));
+					r = ent.collisionBoxes.get(j);
+					//g.draw(new Rectangle(buckyPositionX + r.getX() + ent.getPosX(), buckyPositionY + r.getY() + ent.getPosY(), 
+					//		r.getWidth(), r.getHeight()));
+					rposX = r.getX();
+					rposY = r.getY();
+					r.setLocation(buckyPositionX + r.getX() + ent.getPosX(), buckyPositionY + r.getY() + ent.getPosY());
+					g.draw(r);
+					r.setLocation(rposX, rposY);
 				}
 			}
 		}
 	}
 	public void drawRenderBoxes(Graphics g) {
 		//player
-		Rectangle r = player.getRenderBox();
+		Shape r = player.getRenderBox();
 		g.draw(new Rectangle(buckyPositionX + r.getX() + player.getPosX(), buckyPositionY + r.getY() + player.getPosY(), 
 				r.getWidth(), r.getHeight()));
 		Entity ent;
+		float rposX, rposY;
 		for(int i=0; i < worldMap.objects.size(); i++) {
 			ent = worldMap.objects.get(i);
 			r = ent.getRenderBox();
 			if(ent != player) {
-					g.draw(new Rectangle(buckyPositionX + r.getX() + ent.getPosX(), buckyPositionY + r.getY() + ent.getPosY(), 
-							r.getWidth(), r.getHeight()));
+					//g.draw(new Rectangle(buckyPositionX + r.getX() + ent.getPosX(), buckyPositionY + r.getY() + ent.getPosY(), 
+					//		r.getWidth(), r.getHeight()));
+					rposX = r.getX();
+					rposY = r.getY();
+					r.setLocation(buckyPositionX + r.getX() + ent.getPosX(), buckyPositionY + r.getY() + ent.getPosY());
+					g.draw(r);
+					r.setLocation(rposX, rposY);
 			}
 		}
 	}

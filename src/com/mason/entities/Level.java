@@ -20,7 +20,7 @@ public class Level {
 		dimX = dX; dimY = dY;
 		map = new Tile[dimX][dimY];
 		objects = new ArrayList<Entity>();
-
+		loadTMX(file);
 	}
 	public void insertTile(Tile t, int x, int y) {
 		if((x >= 0 && x < dimX) && (y >= 0 && y < dimY)) {

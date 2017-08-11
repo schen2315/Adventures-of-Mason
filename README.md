@@ -23,3 +23,12 @@ Keep in mind, collisionBoxes and the renderBox are to be stored relative to the 
 * Replace collisionBoxes and RenderBoxes using Slick2D Shapes instead of Rectangles. 
 * Move render sort function to `GameState`
 * Change `Level` to an `extends Entity` class
+
+## Documentation version 0.0.2
+* Changed `tile` private variable inside `Entity` to include all layers from a .tmx file
+* Changed the type of `collisionBoxes` inside `Entity` to `ArrayList<Shape>`
+* Press esc to enter pause menu when inside `gameState`
+
+### Possible Improvements:
+* Intersections on shapes not perfect. Ex: circle & squares. Look at this source for more details on the bug: [http://slick.ninjacave.com/forum/viewtopic.php?t=1972](http://slick.ninjacave.com/forum/viewtopic.php?t=1972)
+
