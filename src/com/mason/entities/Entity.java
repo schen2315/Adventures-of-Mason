@@ -17,33 +17,27 @@ public class Entity {
 		posX = 0; posY = 0;
 		collisionBoxes = new ArrayList<Rectangle>();
 		tiles = new Tile[dimX][dimY];
+		//default renderBox:
+		this.setRenderBox(new Rectangle(0,0,32,32));
 	}
 	Entity(String file, int dX, int dY) throws SlickException {
 		dimX = dX; dimY = dY;
 		tiles = new Tile[dimX][dimY];
 		collisionBoxes = new ArrayList<Rectangle>();
+		//default renderBox:
+		this.setRenderBox(new Rectangle(0,0,32,32));
 		//generate tiles from tmx file
-		TiledMap tmx = new TiledMap("res/" + file);
-		for(int i=0; i<dimX; i++) {
-			for(int j=0; j<dimY; j++) {
-				if(tmx.getTileImage(i,j,0) != null)
-					tiles[i][j] = new Tile(tmx.getTileImage(i,j,0));
-			}
-		}
+		loadTMX(file);
 	}
 	public Entity(String file, int dX, int dY, int px, int py) throws SlickException {
 		dimX = dX; dimY = dY;
 		tiles = new Tile[dimX][dimY];
 		collisionBoxes = new ArrayList<Rectangle>();
 		posX = px; posY = py;
+		//default renderBox:
+		this.setRenderBox(new Rectangle(0,0,32,32));
 		//generate tiles from tmx file
-		TiledMap tmx = new TiledMap("res/" + file);
-		for(int i=0; i<dimX; i++) {
-			for(int j=0; j<dimY; j++) {
-				if(tmx.getTileImage(i,j,0) != null)
-					tiles[i][j] = new Tile(tmx.getTileImage(i,j,0));
-			}
-		}
+		loadTMX(file);
 	}
 	public float getPosX() {
 		return posX;
@@ -81,6 +75,15 @@ public class Entity {
 			for(int j=0; j < dimY; j++) {
 				if(tiles[i][j] != null)
 					tiles[i][j].draw(offX + (i*Tile.width) + posX , offY + (j*Tile.height) + posY);
+			}
+		}
+	}
+	public void loadTMX(String file) throws SlickException {
+		TiledMap tmx = new TiledMap("res/" + file);
+		for(int i=0; i<dimX; i++) {
+			for(int j=0; j<dimY; j++) {
+				if(tmx.getTileImage(i,j,0) != null)
+					tiles[i][j] = new Tile(tmx.getTileImage(i,j,0));
 			}
 		}
 	}

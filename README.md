@@ -22,3 +22,4 @@ Keep in mind, collisionBoxes and the renderBox are to be stored relative to the 
 * Maybe remove tiles altogether and just use entire .png files. May improve performance.
 * Replace collisionBoxes and RenderBoxes using Slick2D Shapes instead of Rectangles. 
 * Move render sort function to `GameState`
+* Change `Level` to an `extends Entity` class

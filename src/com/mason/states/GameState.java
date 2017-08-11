@@ -27,6 +27,7 @@ public class GameState extends BasicGameState {
 	private Player player;
 	private Barrel1 barrel;
 	private Entity tower;
+	private Entity cave;
 	private float step = .2f;
 	boolean quit = false;
 	float buckyPositionX;
@@ -41,13 +42,15 @@ public class GameState extends BasicGameState {
 		buckyPositionY = 0;
 		player = new Player("george.png", 296, 136);
 		barrel = new Barrel1(9*32, 11*32);
-		//tower = new Entity("tower.tmx", 3, 11, 6*32, 0*32);
+		tower = new Entity("tower.tmx", 3, 11, 6*32, 0*32);
+		cave = new Entity("cave.tmx", 8, 5, 12*32, 0*32);
 		worldMap = new Level("firstMap.tmx", 20, 20);
 		worldMap.player = player;
 		
 		worldMap.insertEntity(player);
 		worldMap.insertEntity(barrel);
-		//worldMap.insertEntity(tower);
+		worldMap.insertEntity(tower);
+		worldMap.insertEntity(cave);
 		
 		player.collisionBoxes.add(new Rectangle(player.center[0] + 12, player.center[1] + 28, 24, 12));
 		player.setRenderBox(new Rectangle(12, 28, 24, 12));
@@ -57,7 +60,7 @@ public class GameState extends BasicGameState {
 		
 		worldMap.draw(buckyPositionX, buckyPositionY);
 		//drawCollisionBoxes(g);
-		//drawRenderBoxes(g);
+		drawRenderBoxes(g);
 		g.drawString( "Bucky's X: " + buckyPositionX + "\nBucky's Y: " + buckyPositionY, 200, 20);
 		if(quit == true) {
 			g.drawString( "Resume (R)", 250, 100);
@@ -187,6 +190,7 @@ public class GameState extends BasicGameState {
 		Entity ent;
 		for(int i=0; i < worldMap.objects.size(); i++) {
 			ent = worldMap.objects.get(i);
+			r = ent.getRenderBox();
 			if(ent != player) {
 					g.draw(new Rectangle(buckyPositionX + r.getX() + ent.getPosX(), buckyPositionY + r.getY() + ent.getPosY(), 
 							r.getWidth(), r.getHeight()));
