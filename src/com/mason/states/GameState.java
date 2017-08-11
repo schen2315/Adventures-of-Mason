@@ -47,14 +47,15 @@ public class GameState extends BasicGameState {
 		player = new Player("george.png", 296, 136);
 		barrel = new Barrel1(9*32, 11*32);
 		//tower = new Tower1(6*32, 0*32);
-		tower = new Tower1(0, 0);
-		cave = new Cave1(12*32, 0*32);
+		
+		//cave = new Cave1(12*32, 0*32);
+		cave = new Cave1(0, 0);
 		worldMap = new Level("firstMap.tmx", 20, 20);
 		worldMap.player = player;
 		
 		worldMap.insertEntity(player);
 		worldMap.insertEntity(barrel);
-		worldMap.insertEntity(tower);
+		//worldMap.insertEntity(tower);
 		worldMap.insertEntity(cave);
 		
 		player.collisionBoxes.add(new Rectangle(player.center[0] + 12, player.center[1] + 28, 24, 12));
@@ -183,11 +184,13 @@ public class GameState extends BasicGameState {
 			if(ent != player) {
 				for(int j=0; j < worldMap.objects.get(i).collisionBoxes.size(); j++) {
 					r = ent.collisionBoxes.get(j);
-					//g.draw(new Rectangle(buckyPositionX + r.getX() + ent.getPosX(), buckyPositionY + r.getY() + ent.getPosY(), 
-					//		r.getWidth(), r.getHeight()));
 					rposX = r.getX();
 					rposY = r.getY();
-					r.setLocation(buckyPositionX + r.getX() + ent.getPosX(), buckyPositionY + r.getY() + ent.getPosY());
+					float newX = buckyPositionX + r.getX() + ent.getPosX();
+					float newY = buckyPositionX + r.getY() + ent.getPosY();
+					r.setLocation(newX, newY);
+					System.out.println(newX);
+					System.out.println(newY);
 					g.draw(r);
 					r.setLocation(rposX, rposY);
 				}
@@ -197,10 +200,15 @@ public class GameState extends BasicGameState {
 	public void drawRenderBoxes(Graphics g) {
 		//player
 		Shape r = player.getRenderBox();
-		g.draw(new Rectangle(buckyPositionX + r.getX() + player.getPosX(), buckyPositionY + r.getY() + player.getPosY(), 
-				r.getWidth(), r.getHeight()));
 		Entity ent;
 		float rposX, rposY;
+		rposX = r.getX();
+		rposY = r.getY();
+		r.setLocation(buckyPositionX + r.getX() + player.getPosX(), buckyPositionY + r.getY() + player.getPosY());
+		g.draw(r);
+		r.setLocation(rposX, rposY);
+//		g.draw(new Rectangle(buckyPositionX + r.getX() + player.getPosX(), buckyPositionY + r.getY() + player.getPosY(), 
+//				r.getWidth(), r.getHeight()));
 		for(int i=0; i < worldMap.objects.size(); i++) {
 			ent = worldMap.objects.get(i);
 			r = ent.getRenderBox();
