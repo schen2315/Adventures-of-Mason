@@ -16,6 +16,7 @@ import com.mason.entities.Tower1;
 import com.mason.main.Main;
 
 import org.newdawn.slick.Input;
+import org.newdawn.slick.geom.Line;
 import org.newdawn.slick.geom.Rectangle;
 /*
  * Handles rendering the player & map on screen
@@ -46,16 +47,15 @@ public class GameState extends BasicGameState {
 		buckyPositionY = 0;
 		player = new Player("george.png", 296, 136);
 		barrel = new Barrel1(9*32, 11*32);
-		//tower = new Tower1(6*32, 0*32);
+		tower = new Tower1(6*32, 0*32);
 		
-		//cave = new Cave1(12*32, 0*32);
-		cave = new Cave1(0, 0);
+		cave = new Cave1(12*32, 0*32);
 		worldMap = new Level("firstMap.tmx", 20, 20);
 		worldMap.player = player;
 		
 		worldMap.insertEntity(player);
 		worldMap.insertEntity(barrel);
-		//worldMap.insertEntity(tower);
+		worldMap.insertEntity(tower);
 		worldMap.insertEntity(cave);
 		
 		player.collisionBoxes.add(new Rectangle(player.center[0] + 12, player.center[1] + 28, 24, 12));
@@ -65,7 +65,7 @@ public class GameState extends BasicGameState {
 	public void render(GameContainer gc, StateBasedGame sbg, Graphics g) throws SlickException {
 		
 		worldMap.draw(buckyPositionX, buckyPositionY);
-		drawCollisionBoxes(g);
+		//drawCollisionBoxes(g);
 		//drawRenderBoxes(g);
 		g.drawString("Bucky's X: " + buckyPositionX + "\nBucky's Y: " + buckyPositionY, 200, 20);
 		g.drawString("Mouse X: " + Mouse.getX() + " Mouse Y: " + (Main.resolution[1] - Mouse.getY()), 200, 60);
@@ -150,9 +150,7 @@ public class GameState extends BasicGameState {
 		System.out.println("Leaving Play State!");
 	}
 	public int getID() {
-
 		return 0;
-
 	}
 	public boolean isCollision() {
 		Shape r;
@@ -162,10 +160,23 @@ public class GameState extends BasicGameState {
 			if(ent != player) {
 				for(int j=0; j < worldMap.objects.get(i).collisionBoxes.size(); j++) {
 					r = worldMap.objects.get(i).collisionBoxes.get(j);
-					if(player.collisionBoxes.get(0).intersects(
-							new Rectangle(buckyPositionX + r.getX() + ent.getPosX(), buckyPositionY + r.getY() + ent.getPosY(), 
-									r.getWidth(), r.getHeight()))) {
-						return true;
+					float rposX, rposY;
+					if(r instanceof Line) {
+						r.setLocation(buckyPositionX + ent.getPosX(), buckyPositionY + ent.getPosY());
+						if(player.collisionBoxes.get(0).intersects(r)) {
+							r.setLocation((buckyPositionX + ent.getPosX())*-1, (buckyPositionY + ent.getPosY())*-1);
+							return true;
+						}
+						r.setLocation((buckyPositionX + ent.getPosX())*-1, (buckyPositionY + ent.getPosY())*-1);
+					} else {
+						rposX = r.getX();
+						rposY = r.getY();
+						r.setLocation(buckyPositionX + r.getX() + ent.getPosX(), buckyPositionY + r.getY() + ent.getPosY());
+						if(player.collisionBoxes.get(0).intersects(r)) {
+							r.setLocation(rposX, rposY);
+							return true;
+						}
+						r.setLocation(rposX, rposY);
 					}
 				}
 			}
@@ -184,15 +195,17 @@ public class GameState extends BasicGameState {
 			if(ent != player) {
 				for(int j=0; j < worldMap.objects.get(i).collisionBoxes.size(); j++) {
 					r = ent.collisionBoxes.get(j);
-					rposX = r.getX();
-					rposY = r.getY();
-					float newX = buckyPositionX + r.getX() + ent.getPosX();
-					float newY = buckyPositionX + r.getY() + ent.getPosY();
-					r.setLocation(newX, newY);
-					System.out.println(newX);
-					System.out.println(newY);
-					g.draw(r);
-					r.setLocation(rposX, rposY);
+					if(r instanceof Line) {
+						r.setLocation(buckyPositionX + ent.getPosX(), buckyPositionY + ent.getPosY());
+						g.draw(r);
+						r.setLocation((buckyPositionX + ent.getPosX())*-1, (buckyPositionY + ent.getPosY())*-1);
+					} else {
+						rposX = r.getX();
+						rposY = r.getY();
+						r.setLocation(buckyPositionX + r.getX() + ent.getPosX(), buckyPositionY + r.getY() + ent.getPosY());
+						g.draw(r);
+						r.setLocation(rposX, rposY);
+					}
 				}
 			}
 		}
