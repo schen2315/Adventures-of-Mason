@@ -22,3 +22,16 @@ Keep in mind, collisionBoxes and the renderBox are to be stored relative to the 
 * Maybe remove tiles altogether and just use entire .png files. May improve performance.
 * Replace collisionBoxes and RenderBoxes using Slick2D Shapes instead of Rectangles. 
 * Move render sort function to `GameState`
+* Change `Level` to an `extends Entity` class
+
+## Documentation version 0.0.2
+* Changed `tile` private variable inside `Entity` to include all layers from a .tmx file
+* Changed the type of `collisionBoxes` inside `Entity` to `ArrayList<Shape>` & instead of checking collisions on Rectangles, collisions is checked on any slick2d Shapes now.
+* Press esc to enter pause menu when inside `gameState`
+* Added `Tower1` & `Cave1` classes which extend `Entity` with predefined collision and render boxes.
+
+### How to create Levels with the `com.mason.entities` package
+
+### Possible Improvements:
+* Intersections on shapes not perfect. Ex: circle & squares. Look at this source for more details on the bug: [http://slick.ninjacave.com/forum/viewtopic.php?t=1972](http://slick.ninjacave.com/forum/viewtopic.php?t=1972)
+* Special case for slick2d `Line`s when drawing & updating their position.
