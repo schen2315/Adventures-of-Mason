@@ -44,7 +44,7 @@ public class Level {
 		for(int i=0; i < dimX; i++) {
 			for(int j=0; j < dimY; j++) {
 				if(map[i][j] != null)
-					map[i][j].draw(offX + (i*Tile.width), offY + (j*Tile.height));
+					map[i][j].draw(offX + (i*Tile.width), offY + (j*Tile.height), 1);
 			}
 		}
 		//render objects & player

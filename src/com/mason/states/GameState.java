@@ -1,5 +1,7 @@
 package com.mason.states;
 
+import java.io.IOException;
+
 import org.lwjgl.input.Mouse;
 import org.newdawn.slick.GameContainer;
 import org.newdawn.slick.Graphics;
@@ -12,6 +14,7 @@ import com.mason.entities.Cave1;
 import com.mason.entities.Entity;
 import com.mason.entities.Level;
 import com.mason.entities.Player;
+import com.mason.entities.Pool1;
 import com.mason.entities.Tower1;
 import com.mason.main.Main;
 
@@ -33,6 +36,7 @@ public class GameState extends BasicGameState {
 	private Barrel1 barrel;
 	private Entity tower;
 	private Entity cave;
+	private Pool1 pool;
 	private float step = .2f;
 	boolean quit = false;
 	float buckyPositionX;
@@ -45,10 +49,15 @@ public class GameState extends BasicGameState {
 
 		buckyPositionX = 0;
 		buckyPositionY = 0;
-		player = new Player("george.png", 296, 136);
-		barrel = new Barrel1(9*32, 11*32);
-		tower = new Tower1(6*32, 0*32);
-		
+		try {
+			player = new Player("george.png", 296, 136);
+			barrel = new Barrel1(9*32, 11*32);
+			tower = new Tower1(6*32, 0*32);
+			pool = new Pool1(12*32, 12*32);
+		} catch (IOException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
 		cave = new Cave1(12*32, 0*32);
 		worldMap = new Level("firstMap.tmx", 20, 20);
 		worldMap.player = player;
@@ -57,7 +66,7 @@ public class GameState extends BasicGameState {
 		worldMap.insertEntity(barrel);
 		worldMap.insertEntity(tower);
 		worldMap.insertEntity(cave);
-		
+		worldMap.insertEntity(pool);
 		player.collisionBoxes.add(new Rectangle(player.center[0] + 12, player.center[1] + 28, 24, 12));
 		player.setRenderBox(new Rectangle(12, 28, 24, 12));
 	}
