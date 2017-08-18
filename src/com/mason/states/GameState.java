@@ -10,7 +10,7 @@ import com.mason.entities.Barrel1;
 import com.mason.entities.Entity;
 import com.mason.entities.Level;
 import com.mason.entities.Player;
-
+import com.mason.player.Inventory;
 
 import org.newdawn.slick.Input;
 import org.newdawn.slick.geom.Rectangle;
@@ -29,6 +29,7 @@ public class GameState extends BasicGameState {
 	private Entity tower;
 	private float step = .2f;
 	boolean quit = false;
+	boolean showInv = false;
 	float buckyPositionX;
 	float buckyPositionY;
 
@@ -58,6 +59,10 @@ public class GameState extends BasicGameState {
 		worldMap.draw(buckyPositionX, buckyPositionY);
 		//drawCollisionBoxes(g);
 		//drawRenderBoxes(g);
+		String invString = Inventory.inventory.toString();
+		if (showInv == true){
+			g.drawString(invString, 50, 20);
+		}
 		g.drawString( "Bucky's X: " + buckyPositionX + "\nBucky's Y: " + buckyPositionY, 200, 20);
 		if(quit == true) {
 			g.drawString( "Resume (R)", 250, 100);
@@ -71,6 +76,8 @@ public class GameState extends BasicGameState {
 	
 	public void update(GameContainer gc, StateBasedGame sbg, int delta) throws SlickException {
 		Input input = gc.getInput();
+		
+		
 		player.setPlayer();
 		//up
 		if(input.isKeyDown(Input.KEY_W)) {
@@ -130,7 +137,22 @@ public class GameState extends BasicGameState {
 				System.exit(0);
 			}
 		}
-	}
+		
+		// Inventory
+		if (input.isKeyPressed(Input.KEY_I)){
+			showInv = true;
+			}
+		
+		//Pickup Items
+		if (input.isKeyPressed(Input.KEY_P)){
+			Inventory.itemOne();
+		}
+	
+			
+		}
+	
+	
+	
 	@Override
 	public void enter(GameContainer gc, StateBasedGame sbg) {
 		System.out.println("Entering Play State!");

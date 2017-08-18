@@ -7,20 +7,27 @@ import org.newdawn.slick.SlickException;
 import org.newdawn.slick.tiled.TiledMap;
 
 public class Level {
+	
+	
 	private Tile[][] map;
 	private int dimX, dimY;
 	public ArrayList<Entity> objects;
 	public Player player;
+	
+	
 	Level(int dX, int dY) {
 		dimX = dX; dimY = dY;
 		map = new Tile[dimX][dimY];
 		objects = new ArrayList<Entity>();
 	}
 	public Level(String file, int dX, int dY) throws SlickException {
+		
 		dimX = dX; dimY = dY;
 		map = new Tile[dimX][dimY];
 		objects = new ArrayList<Entity>();
 		TiledMap tmx = new TiledMap("res/" + file);
+		
+		
 		for(int i=0; i<dimX; i++) {
 			for(int j=0; j<dimY; j++) {
 				if(tmx.getTileImage(i,j,0) != null)
@@ -55,6 +62,7 @@ public class Level {
 		}
 		//render objects & player
 		//sort objects using render boxes
+		
 		Collections.sort(objects, (ent1, ent2) -> {
 			float val1 = ((Entity) ent1).getRenderBox().getY() + ((Entity) ent1).getRenderBox().getHeight() + ent1.getPosY();
 			float val2 = ((Entity) ent2).getRenderBox().getY() + ((Entity) ent2).getRenderBox().getHeight() + ent2.getPosY();

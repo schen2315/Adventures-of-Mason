@@ -12,6 +12,8 @@ public class Entity {
 	private float posX, posY;
 	private Rectangle renderBox;
 	public ArrayList<Rectangle> collisionBoxes;
+	
+	
 	Entity(int dX, int dY) {
 		dimX = dX; dimY = dY;
 		posX = 0; posY = 0;
