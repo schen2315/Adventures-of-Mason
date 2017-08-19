@@ -74,7 +74,9 @@ The `Entity` class provides a method called `loadCollisionFile` for automaticall
 * Undo a collision Box typing CTRL-Z
 * Press Enter to export the collision Box dimensions to a .txt file
 
-
+### Improvements
+* Need to add support for circles/ elipses for collisionEditor
+* Add support for dragging and resizing collision boxes in the collisionEditor
 
 
 
