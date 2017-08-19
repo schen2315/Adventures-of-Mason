@@ -47,7 +47,8 @@ Using this editor is much more intuitive and faster:
 <img src="CollisionEditorDemo.gif" width="400" height="300">
 
 #### How to Use:
-The Collision Editor is its own slick2d game state. In `Main` open the collision Editor by
+The Collision Editor is its own slick2d game state. In `Main` open the collision Editor by adding a `collisionEditor` instance state to the `StateBasedGame`. For example:
+
 ```java
 public Main(String gamename) throws SlickException {
 	super(gamename);
@@ -56,12 +57,24 @@ public Main(String gamename) throws SlickException {
 	this.addState(new CollisionEditor(2, "pool.tmx"));
 }
 ```
+Here, in `CollisionEditor(2, "pool.tmx")`, the 2 refers the states' ID, and "pool.tmx" is the .tmx asset file containing the sprite. Next, in `initStatesList` enter the `CollisionEditor` state instance.
+```java
+public void initStatesList(GameContainer arg0) throws SlickException {
+		this.enterState(collisionEditor);
+	}
+```
+Once you are satisfied with your collision Boxes, you can export them to a .txt file by pressing Enter.
+The `Entity` class provides a method called `loadCollisionFile` for automatically adding collision Boxes using the .txt file created by the collisionEditor.
 
 #### Controls:
 * Drag the screen around by holding down right click and dragging your mouse
 * Zoom in and out using your scroll wheel
 * Click either the Rectangle or Line (just those for now) to select the the type of collision Box
 * Left Click and drag the mouse and release to draw a collision Box (or line)
+* Undo a collision Box typing CTRL-Z
+* Press Enter to export the collision Box dimensions to a .txt file
+
+
 
 
 
