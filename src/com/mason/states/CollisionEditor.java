@@ -219,9 +219,10 @@ public class CollisionEditor extends BasicGameState implements MouseListener, Ke
 	public void keyPressed(int key, char c) {
 		System.out.println(key);
 		keyCodes[key] = true;
-		//press ctrl-z
+		//press ctrl-z to undo
 		if(keyCodes[29] && keyCodes[44]) {
-			savedShapes.removeLast();
+			if(savedShapes.size() > 0)
+				savedShapes.removeLast();
 		}
 		//1 -> Rectangle
 		if(keyCodes[2]) {
