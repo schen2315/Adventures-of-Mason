@@ -39,7 +39,7 @@ public class Main extends StateBasedGame {
 	public void initStatesList(GameContainer arg0) throws SlickException {
 		this.getState(menu).init(gc, this);
 		this.getState(game).init(gc, this);
-		this.enterState(menu);
-		//this.enterState(collisionEditor);
+		//this.enterState(menu);
+		this.enterState(collisionEditor);
 	}
 }
