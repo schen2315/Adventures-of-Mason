@@ -25,15 +25,9 @@ public class Level {
 		dimX = dX; dimY = dY;
 		map = new Tile[dimX][dimY];
 		objects = new ArrayList<Entity>();
-		TiledMap tmx = new TiledMap("res/" + file);
-		
-		
-		for(int i=0; i<dimX; i++) {
-			for(int j=0; j<dimY; j++) {
-				if(tmx.getTileImage(i,j,0) != null)
-					map[i][j] = new Tile(tmx.getTileImage(i,j,0));
-			}
-		}
+
+		loadTMX(file);
+
 	}
 	public void insertTile(Tile t, int x, int y) {
 		if((x >= 0 && x < dimX) && (y >= 0 && y < dimY)) {
@@ -73,6 +67,15 @@ public class Level {
 		});
 		for(int i=0; i < objects.size(); i++) {
 			objects.get(i).draw(offX, offY);
+		}
+	}
+	public void loadTMX(String file) throws SlickException {
+		TiledMap tmx = new TiledMap("res/" + file);
+		for(int i=0; i<dimX; i++) {
+			for(int j=0; j<dimY; j++) {
+				if(tmx.getTileImage(i,j,0) != null)
+					map[i][j] = new Tile(tmx.getTileImage(i,j,0));
+			}
 		}
 	}
 }
