@@ -35,3 +35,48 @@ Keep in mind, collisionBoxes and the renderBox are to be stored relative to the 
 ### Possible Improvements:
 * Intersections on shapes not perfect. Ex: circle & squares. Look at this source for more details on the bug: [http://slick.ninjacave.com/forum/viewtopic.php?t=1972](http://slick.ninjacave.com/forum/viewtopic.php?t=1972)
 * Special case for slick2d `Line`s when drawing & updating their position.
+
+## Documentation version 0.0.3
+### Inventory
+
+### Collision Editor
+Before, adding collision boxes to objects was really difficult. You had to load the sprite image into the `gamestate`. Then you had to hover your mouse over areas of the screen to get the dimensions of the collisionBoxes and then manually program them into a class for a particular object.  
+  
+Using this editor is much more intuitive and faster:  
+
+<img src="CollisionEditorDemo.gif" width="400" height="300">
+
+#### How to Use:
+The Collision Editor is its own slick2d game state. In `Main` open the collision Editor by adding a `collisionEditor` instance state to the `StateBasedGame`. For example:
+
+```java
+public Main(String gamename) throws SlickException {
+	super(gamename);
+	this.addState(new GameState(0));
+	this.addState(new MenuState(1));
+	this.addState(new CollisionEditor(2, "pool.tmx"));
+}
+```
+Here, in `CollisionEditor(2, "pool.tmx")`, the 2 refers the states' ID, and "pool.tmx" is the .tmx asset file containing the sprite. Next, in `initStatesList` enter the `CollisionEditor` state instance.
+```java
+public void initStatesList(GameContainer arg0) throws SlickException {
+		this.enterState(collisionEditor);
+	}
+```
+Once you are satisfied with your collision Boxes, you can export them to a .txt file by pressing Enter.
+The `Entity` class provides a method called `loadCollisionFile` for automatically adding collision Boxes using the .txt file created by the collisionEditor.
+
+#### Controls:
+* Drag the screen around by holding down right click and dragging your mouse
+* Zoom in and out using your scroll wheel
+* Click either the Rectangle or Line (just those for now) to select the the type of collision Box
+* Left Click and drag the mouse and release to draw a collision Box (or line)
+* Undo a collision Box typing CTRL-Z
+* Press Enter to export the collision Box dimensions to a .txt file
+
+### Improvements
+* Need to add support for circles/ elipses for collisionEditor
+* Add support for dragging and resizing collision boxes in the collisionEditor
+
+
+

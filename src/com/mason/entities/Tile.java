@@ -19,7 +19,7 @@ public class Tile {
 	public Image getImage() {
 		return tile;
 	}
-	public void draw(float offX, float offY) {
-		tile.draw(offX, offY);
+	public void draw(float offX, float offY, float scale) {
+		tile.draw(offX, offY, scale);
 	}
 }

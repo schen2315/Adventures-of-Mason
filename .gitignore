@@ -1,5 +1,11 @@
 bin/*
+<<<<<<< HEAD
 /bin/
 .classpath
 .project
 
+=======
+.classpath
+.project
+/bin/
+>>>>>>> collisionEditor
